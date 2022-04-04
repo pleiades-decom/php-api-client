@@ -1,0 +1,26 @@
+{
+    "name": "pleiades_decom/php-api-client",
+    "description": "PHP library for PLEIADES API Client",
+    "type": "library",
+    "require": {
+        "aws/aws-sdk-php": "^3.212",
+        "guzzlehttp/guzzle": "7.4.x"
+    },
+    "require-dev": {
+        "aws/aws-sdk-php": "^3.212",
+        "guzzlehttp/guzzle": "7.4.x"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "PleiadesDecom\\PhpApiClient\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dusan Daniska",
+            "email": "dusan.daniska@wai.sk"
+        }
+    ],
+    "minimum-stability": "dev"
+}
