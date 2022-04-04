@@ -1,5 +1,5 @@
 <?php
 
-namespace WaiBlue\PleiadesPhpAPI\Exception;
+namespace PleiadesDecom\PhpApiClient\Exception;
 
 class RequestException extends \Exception {}

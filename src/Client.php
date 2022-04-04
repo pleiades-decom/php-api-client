@@ -1,6 +1,6 @@
 <?php
 
-namespace WaiBlue\PleiadesPhpAPI;
+namespace PleiadesDecom\PhpApiClient;
 
 class Client {
 
@@ -125,12 +125,12 @@ class Client {
 
       return $this->lastResponse;
     } catch (\GuzzleHttp\Exception\ConnectException $e) {
-      throw new \WaiBlue\PleiadesPhpAPI\Exception\RequestException(
+      throw new \PleiadesDecom\PhpApiClient\Exception\RequestException(
         "Connection failed"
       );
     } catch (\GuzzleHttp\Exception\BadResponseException $e) {
       $this->lastResponse = $e->getResponse();
-      throw new \WaiBlue\PleiadesPhpAPI\Exception\RequestException(
+      throw new \PleiadesDecom\PhpApiClient\Exception\RequestException(
         $this->lastResponse->getStatusCode()
         ." "
         .$this->lastResponse->getReasonPhrase()
