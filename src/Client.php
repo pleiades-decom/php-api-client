@@ -141,6 +141,17 @@ class Client {
   }
   
   /**
+   * Creates a database.
+   *
+   * @param  mixed $database
+   * @return void
+   */
+  public function createDatabase(string $database) {
+    $res = $this->sendRequest("PUT", "/database/{$database}");
+    return (string) $res->getBody();
+  }
+  
+  /**
    * Sets a database to be used in the request shortcuts.
    *
    * @param  mixed $database
