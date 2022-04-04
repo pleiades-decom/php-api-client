@@ -1,5 +1,5 @@
 {
-    "name": "pleiades_decom/php-api-client",
+    "name": "pleiades-decom/php-api-client",
     "description": "PHP library for PLEIADES API Client",
     "type": "library",
     "require": {
