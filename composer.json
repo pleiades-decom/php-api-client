@@ -3,6 +3,7 @@
     "description": "PHP library for PLEIADES API Client",
     "type": "library",
     "require": {
+        "php": ">=7.4",
         "aws/aws-sdk-php": "^3.212",
         "guzzlehttp/guzzle": "7.4.x"
     },
