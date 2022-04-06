@@ -1,0 +1,5 @@
+{
+    "require": {
+         "pleiades-decom/php-api-client": "dev-main"
+    }
+}
