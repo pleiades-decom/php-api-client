@@ -133,6 +133,13 @@ class Client {
       );
 
       return $this->lastResponse;
+    } catch (\GuzzleHttp\Exception\RequestException $e) {
+      throw new \PleiadesDecom\PhpApiClient\Exception\RequestException(
+        json_encode([
+          "statusCode" => 500,
+          "reason" => "General RequestException error."
+        ])
+      );
     } catch (\GuzzleHttp\Exception\ConnectException $e) {
       throw new \PleiadesDecom\PhpApiClient\Exception\RequestException(
         json_encode([
