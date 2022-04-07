@@ -136,8 +136,8 @@ class Client {
     } catch (\GuzzleHttp\Exception\ConnectException $e) {
       throw new \PleiadesDecom\PhpApiClient\Exception\RequestException(
         json_encode([
-          "statusCode" => 404,
-          "reason" => "Connection failed"
+          "statusCode" => 503,
+          "reason" => "Connection to PLEIADES API server failed."
         ])
       );
     } catch (\GuzzleHttp\Exception\BadResponseException $e) {
@@ -146,7 +146,7 @@ class Client {
         json_encode([
           "statusCode" => $this->lastResponse->getStatusCode(),
           "reason" => $this->lastResponse->getReasonPhrase(),
-          "body" => @json_decode($this->lastResponse->getBody(true))
+          "responseBody" => @json_decode($this->lastResponse->getBody(true))
         ])
       );
     }
