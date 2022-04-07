@@ -133,13 +133,6 @@ class Client {
       );
 
       return $this->lastResponse;
-    } catch (\GuzzleHttp\Exception\RequestException $e) {
-      throw new \PleiadesDecom\PhpApiClient\Exception\RequestException(
-        json_encode([
-          "statusCode" => 500,
-          "reason" => "General RequestException error."
-        ])
-      );
     } catch (\GuzzleHttp\Exception\ConnectException $e) {
       throw new \PleiadesDecom\PhpApiClient\Exception\RequestException(
         json_encode([
@@ -156,7 +149,14 @@ class Client {
           "responseBody" => @json_decode($this->lastResponse->getBody(true))
         ])
       );
-    }
+    } catch (\GuzzleHttp\Exception\RequestException $e) {
+      throw new \PleiadesDecom\PhpApiClient\Exception\RequestException(
+        json_encode([
+          "statusCode" => 500,
+          "reason" => "General RequestException error."
+        ])
+      );
+    } 
   }
   
   /**
@@ -233,6 +233,16 @@ class Client {
    */
   public function getRecords($query = NULL) : array|null {
     $res = $this->sendRequest("POST", "/database/{$this->database}/records", ["query" => $query]);
+    return json_decode((string) $res->getBody(), TRUE);
+  }
+
+  /**
+   * Shortcut to get list of available databases.
+   *
+   * @return array List of available databases..
+   */
+  public function getDatabases() : array {
+    $res = $this->sendRequest("GET", "/databases");
     return json_decode((string) $res->getBody(), TRUE);
   }
 
