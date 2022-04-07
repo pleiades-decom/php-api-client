@@ -135,16 +135,19 @@ class Client {
       return $this->lastResponse;
     } catch (\GuzzleHttp\Exception\ConnectException $e) {
       throw new \PleiadesDecom\PhpApiClient\Exception\RequestException(
-        "Connection failed"
+        json_encode([
+          "statusCode" => 404,
+          "reason" => "Connection failed"
+        ])
       );
     } catch (\GuzzleHttp\Exception\BadResponseException $e) {
       $this->lastResponse = $e->getResponse();
       throw new \PleiadesDecom\PhpApiClient\Exception\RequestException(
-        $this->lastResponse->getStatusCode()
-        ." "
-        .$this->lastResponse->getReasonPhrase()
-        .": "
-        .(string) $this->lastResponse->getBody()
+        json_encode([
+          "statusCode" => $this->lastResponse->getStatusCode(),
+          "reason" => $this->lastResponse->getReasonPhrase(),
+          "body" => @json_decode($this->lastResponse->getBody(true))
+        ])
       );
     }
   }
