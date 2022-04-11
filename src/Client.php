@@ -53,6 +53,7 @@ class Client {
 
     $this->iamTokenEndpoint = $config['iamTokenEndpoint'] ?? "";
     $this->apiEndpoint = $config['apiEndpoint'] ?? "";
+    $this->s3Endpoint = $config['s3Endpoint'] ?? "";
 
     // initiate HTTP client
     $this->guzzle = new \GuzzleHttp\Client(['verify' => false]);
@@ -61,12 +62,13 @@ class Client {
     $this->s3Client = new \Aws\S3\S3Client([
       'version' => 'latest',
       'region'  => 'us-east-1',
-      'endpoint' => 'http://localhost:9000',
+      'endpoint' => $this->s3Endpoint,
       'use_path_style_endpoint' => true,
       'credentials' => [
-        'key'    => 'access-user-1',
-        'secret' => 'secret-user-1',
+        'key'    => 'minio-admin',
+        'secret' => 'minio-admin-1234',
       ],
+      'http' => ['verify' => FALSE],
     ]);
 
   }
@@ -244,6 +246,26 @@ class Client {
   public function getDatabases() : array {
     $res = $this->sendRequest("GET", "/databases");
     return json_decode((string) $res->getBody(), TRUE);
+  }
+
+  public function downloadFile(string $url) : string {
+    $tmpPos = strpos($url, "/");
+    if ($tmpPos === FALSE) {
+      $bucketName = "";
+      $fileName = $url;
+    } else {
+      $bucketName = substr($url, 0, $tmpPos);
+      $fileName = substr($url, $tmpPos + 1);
+    }
+
+    // Download the contents of the object.
+    $object = $this->s3Client->getObject([
+      'Bucket' => $bucketName,
+      'Key'    => $fileName,
+    ]);
+
+    // Print the body of the result by indexing into the result object.
+    return (string) $object['Body'];
   }
 
 }
