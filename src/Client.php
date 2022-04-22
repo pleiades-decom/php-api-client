@@ -248,6 +248,16 @@ class Client {
     return json_decode((string) $res->getBody(), TRUE);
   }
 
+  /**
+   * Shortcut to delete a database
+   *
+   * @return string $databaseName of 200 success. Otherwise exception is thrown.
+   */
+  public function deleteDatabase() : string {
+    $res = $this->sendRequest("DELETE", "/database/{$this->database}");
+    return (string) $res->getBody();
+  }
+
   public function downloadFile(string $url) : string {
     $tmpPos = strpos($url, "/");
     if ($tmpPos === FALSE) {
