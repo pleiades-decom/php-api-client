@@ -168,7 +168,7 @@ class Client {
    * @return void
    */
   public function createDatabase(string $database) {
-    $res = $this->sendRequest("PUT", "/database/{$database}");
+    $res = $this->sendRequest("POST", "/database/{$database}");
     return (string) $res->getBody();
   }
   
