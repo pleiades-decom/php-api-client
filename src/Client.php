@@ -65,8 +65,8 @@ class Client {
       'endpoint' => $this->s3Endpoint,
       'use_path_style_endpoint' => true,
       'credentials' => [
-        'key'    => 'minio-admin',
-        'secret' => 'minio-admin-1234',
+        'key'    => $this->userName,
+        'secret' => $this->userPassword,
       ],
       'http' => ['verify' => FALSE],
     ]);
