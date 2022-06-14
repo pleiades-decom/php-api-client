@@ -211,9 +211,9 @@ class Client {
    * @param  mixed $recordId ID of the record to get.
    * @return array Data of the requested record. Otherwise exception is thrown.
    */
-  public function getRecord(string $recordId) : array|null {
+  public function getRecord(string $recordId) : array {
     $res = $this->sendRequest("GET", "/database/{$this->database}/record/{$recordId}");
-    return json_decode((string) $res->getBody(), TRUE);
+    return (array) json_decode((string) $res->getBody(), TRUE);
   }
   
   /**
@@ -233,9 +233,9 @@ class Client {
    * @param  mixed $query A MongoDB-like search query.
    * @return array List of records matching the query.
    */
-  public function getRecords($query = NULL) : array|null {
+  public function getRecords($query = NULL) : array {
     $res = $this->sendRequest("POST", "/database/{$this->database}/records", ["query" => $query]);
-    return json_decode((string) $res->getBody(), TRUE);
+    return (array) json_decode((string) $res->getBody(), TRUE);
   }
 
   /**
