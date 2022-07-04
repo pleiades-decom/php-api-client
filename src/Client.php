@@ -268,14 +268,19 @@ class Client {
       $fileName = substr($url, $tmpPos + 1);
     }
 
-    // Download the contents of the object.
-    $object = $this->s3Client->getObject([
-      'Bucket' => $bucketName,
-      'Key'    => $fileName,
-    ]);
+    try {
+      // Download the contents of the object.
+      $object = $this->s3Client->getObject([
+        'Bucket' => $bucketName,
+        'Key'    => $fileName,
+      ]);
 
-    // Print the body of the result by indexing into the result object.
-    return (string) $object['Body'];
+      return (string) $object['Body'];
+    } catch(
+        \Aws\S3\Exception\S3Exception 
+        | \Aws\Exception\AwsException
+        $e
+    ) { throw new \PleiadesDecom\PhpApiClient\Exception\RequestException($e->getMessage()); }
   }
 
 }
