@@ -124,8 +124,6 @@ class Client {
       if (!empty($this->debugFile)) {
         $options['debug'] = fopen($this->debugFile, 'w');
       }
-
-
       // $options['debug'] = TRUE;
 
       $this->lastResponse = $this->guzzle->request(
@@ -233,8 +231,17 @@ class Client {
    * @param  mixed $query A MongoDB-like search query.
    * @return array List of records matching the query.
    */
-  public function getRecords($query = NULL) : array {
-    $res = $this->sendRequest("POST", "/database/{$this->database}/records", ["query" => $query]);
+  public function getRecords($query = NULL, $fields = NULL, $methods = NULL) : array {
+    $res = $this->sendRequest(
+      "POST", 
+      "/database/{$this->database}/records", 
+      [
+        "query" => $query,
+        "flieds" => $fields,
+        "methods" => $methods
+      ]
+    );
+
     return (array) json_decode((string) $res->getBody(), TRUE);
   }
 
