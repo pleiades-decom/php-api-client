@@ -122,7 +122,7 @@ class Client {
       ];
 
       if (!empty($this->debugFile)) {
-        $options['debug'] = fopen($this->debugFile, 'w');
+        //$options['debug'] = fopen($this->debugFile, 'w');
       }
       // $options['debug'] = TRUE;
 
